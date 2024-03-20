@@ -1,19 +1,25 @@
 import streamlit as st
-
+from modulos.analisis_exploratorio import run as run_analisis_exploratorio
+from modulos.correlacion_datos import run as run_correlacion_datos
+from modulos.modelo import run as run_modelo
+from modulos.base_datos import run as run_base_datos
 
 def main():
-    # Configura la página para utilizar todo el ancho disponible
     st.set_page_config(layout="wide")
-
-    # Creación del menú lateral para la navegación
     st.sidebar.title("Menú")
     opcion = st.sidebar.radio(
         "Selecciona un módulo",
         ("Análisis Exploratorio de Datos", "Correlación de Datos", "Modelo", "Base de datos")
     )
-  # Asegúrate de que esta función esté definida en alguna parte de tu script
 
-# Asegúrate de definir las funciones mencionadas aquí, como modulo_analisis_exploratorio, modulo_corr, modulo_modelo, y modulo_overview.
+    if opcion == "Análisis Exploratorio de Datos":
+        run_analisis_exploratorio()
+    elif opcion == "Correlación de Datos":
+        run_correlacion_datos()
+    elif opcion == "Modelo":
+        run_modelo()
+    elif opcion == "Base de datos":
+        run_base_datos()
 
 if __name__ == "__main__":
     main()
