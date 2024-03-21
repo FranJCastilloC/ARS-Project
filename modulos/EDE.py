@@ -18,7 +18,7 @@ def run():
 
 #Cargar Datos
     def load_data(folder_path):
-    
+        
         data_frames = {}
         for file_name in os.listdir(folder_path):
             if file_name.endswith('.csv') or file_name.endswith('.xlsx'):
@@ -26,7 +26,7 @@ def run():
                 file_path = os.path.join(folder_path, file_name)
                 if file_name.endswith('.csv'):
                     data_frames[variable_name] = pd.read_csv(file_path)
-                else:  # Para archivos XLSX
+                else:  
                     xls = pd.ExcelFile(file_path)
                     for sheet_name in xls.sheet_names:
                         variable_sheet_name = f"{variable_name}_{sheet_name}"

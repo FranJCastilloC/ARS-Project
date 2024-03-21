@@ -1,5 +1,6 @@
 import streamlit as st
 from modulos.EDE import run as run_EDE
+from modulos.corr import run as run_corr
 
 def main():
     st.set_page_config(layout="wide")
@@ -12,7 +13,7 @@ def main():
     if opcion == "Análisis Exploratorio de Datos":
         run_EDE()
     elif opcion == "Correlación de Datos":
-        run_correlacion_datos()
+        run_corr()
     elif opcion == "Modelo":
         run_modelo()
     elif opcion == "Base de datos":
