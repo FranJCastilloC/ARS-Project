@@ -1,5 +1,4 @@
 # archivo: modulos/correlacion_datos.py
-
 import streamlit as st
 import pandas as pd
 import seaborn as sns
@@ -33,7 +32,6 @@ def run():
         # Configurar tamaño de figura en Seaborn
         fig, ax = plt.subplots(figsize=(10, 8)) # Ajusta el tamaño según necesites
 
-        
         # Crear el heatmap
         sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', fmt=".2f", linewidths=0.5, ax=ax)
         
