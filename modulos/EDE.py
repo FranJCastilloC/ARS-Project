@@ -347,7 +347,7 @@ def run():
             with col1:
 
                 # Carga el GeoJSON
-                geojson_path = 'C:/Users/franc/OneDrive - INTEC/Escritorio/Proyecto ARS\Dashboards\PROV.geojson'
+                geojson_path = 'PROV.geojson'
                 with open(geojson_path) as geojson_file:
                     geojson_data = json.load(geojson_file)
 
