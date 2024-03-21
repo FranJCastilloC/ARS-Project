@@ -32,8 +32,7 @@ def run():
                         variable_sheet_name = f"{variable_name}_{sheet_name}"
                         data_frames[variable_sheet_name] = pd.read_excel(file_path, sheet_name=sheet_name)
         return data_frames
-
-
+   
 #Preparando Data Frames
     def prepare_dataframes(data_frames):
         """
@@ -929,7 +928,7 @@ def run():
                                 title=f'Distribución de Monto - {fecha_seleccionada}')
                 st.plotly_chart(fig_monto, use_container_width=True)
 
-    folder_path = "C:/Users/franc/OneDrive - INTEC/Escritorio/ARS/BD FINAL" 
+    folder_path = "BD FINAL" 
     data_frames = load_data(folder_path)
     prepare_dataframes(data_frames)
         
