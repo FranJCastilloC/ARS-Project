@@ -32,9 +32,7 @@ def run():
                         variable_sheet_name = f"{variable_name}_{sheet_name}"
                         data_frames[variable_sheet_name] = pd.read_excel(file_path, sheet_name=sheet_name)
         return data_frames
-    
-    if st.button('Mostrar archivos en el directorio'):
-    st.write(os.listdir(folder_path))
+
 
 #Preparando Data Frames
     def prepare_dataframes(data_frames):
