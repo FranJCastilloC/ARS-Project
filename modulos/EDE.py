@@ -929,7 +929,7 @@ def run():
                                 title=f'Distribución de Monto - {fecha_seleccionada}')
                 st.plotly_chart(fig_monto, use_container_width=True)
 
-    folder_path = "BD FINAL" 
+    folder_path = "C:/Users/franc/OneDrive - INTEC/Escritorio/ARS/BD FINAL" 
     data_frames = load_data(folder_path)
     prepare_dataframes(data_frames)
         
