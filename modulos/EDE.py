@@ -14,21 +14,6 @@ import matplotlib.colors as mcolors
 def run():
     st.header("Análisis Exploratorio de Datos")
     st.write("Este apartado se enfoca en la exploración de datos desde cuatro perspectivas distintas, abordando el planteamiento e interpretación del problema, y el análisis e interpretación de datos asociados con los afiliados al Sistema de Seguridad Social (SFS), la población en general, y las finanzas del sistema dentro de regimen contributivo de salud.")
-    folder_path = "C:/Users/franc/OneDrive - INTEC/Escritorio/ARS/BD FINAL" 
-
-     # Botón para mostrar archivos en el directorio
-    if st.button('Mostrar archivos en el directorio'):
-        # Asegúrate de que la ruta del directorio sea correcta
-        if os.path.exists(folder_path):
-            # Lista y muestra los archivos
-            files = os.listdir(folder_path)
-            st.write(files)
-        else:
-            st.error('El directorio especificado no existe.')
-
-    data_frames = load_data(folder_path)
-
-
 
 
 #Cargar Datos
@@ -944,6 +929,9 @@ def run():
                                 title=f'Distribución de Monto - {fecha_seleccionada}')
                 st.plotly_chart(fig_monto, use_container_width=True)
 
+    folder_path = "C:/Users/franc/OneDrive - INTEC/Escritorio/ARS/BD FINAL" 
+    data_frames = load_data(folder_path)
+    prepare_dataframes(data_frames)
         
     if 'df_unificado' in data_frames and 'educacion' in data_frames:
         display_data_visualizations(data_frames['df_unificado'], data_frames['educacion'],data_frames['Sector'],data_frames['edad'],data_frames['lista_Afiliados_1'], data_frames['Indicador'],data_frames['Eda'],
