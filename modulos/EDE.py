@@ -325,13 +325,135 @@ def run():
                     st.metric(label="Aporteanual esperado por persona", value="RD$2,545.27")
 
                 # Para el aporte total esperado de los no afiliados, dado que es una cifra importante, podría ocupar su propia sección o estar destacada de otra manera
-                st.metric(label="Aporte total esperado de no afiliados en el año 2022", value="RD$1,616,479,141.53")
+                st.metric(label="Aporte total esperado de no afiliados en el año 2022", value="RD$19,397,736,038.1637")
                 st.write("Estos cálculos se obtuvieron mediante la aplicación de una distribución de densidad kernel")
+
+            # Monto actual de la TSS en 2022
+            monto_actual = 76678782618.24
+            # Aporte adicional si todos los empleados se asocian al régimen contributivo
+            aporte_adicional = 19397736038.1637
+            # Calcula el nuevo ingreso total
+            nuevo_total = monto_actual + aporte_adicional
+
+            # Formatea los montos para mostrarlos de manera amigable
+            monto_actual_str = f"${monto_actual:,.2f}"
+            aporte_adicional_str = f"${aporte_adicional:,.2f}"
+            nuevo_total_str = f"${nuevo_total:,.2f}"
+
+            # Crear un contenedor para los datos financieros
+            with st.container():
+                st.write("## Resultados con los nuevos aportes")
+                st.write("### Resumen Financiero TSS 2022")
+                
+                # Uso de columnas para resaltar los montos
+                col1, col2, col3 = st.columns(3)
+                col1.metric("Ingreso Actual de la TSS", monto_actual_str)
+                col2.metric("Aporte Adicional", aporte_adicional_str)
+                col3.metric("Nuevo Ingreso Total", nuevo_total_str)
+
+            st.write("Sin lugar a duda el aporte de los no Afiliados es significativo, pero no podemos pasar de largo el hecho que estos nuevos afiliados requieren un mayor costo en salud")
             
-            st.header("Resultados con los nuevos aportes")
+            # Valores para las métricas
+            porcentaje_siniestralidad = "89%"
+            tasa_dependencia = "1.08"
+
+            # Estilo personalizado para los contenedores
+            st.markdown("""
+                <style>
+                    .metric-container {
+                        padding: 20px;
+                        border-radius: 10px;
+                        color: white;
+                        background-color: #4E2A84;
+                        border: 2px solid #9D69A3;
+                        margin: 5px;
+                    }
+                    .metric-title {
+                        font-size: 18px;
+                        margin-bottom: 5px;
+                    }
+                    .metric-value {
+                        font-size: 26px;
+                        font-weight: bold;
+                    }
+                </style>
+            """, unsafe_allow_html=True)
+
+            # Crear columnas para los cuadros de métricas
+            col1, col2 = st.columns(2)
+
+            # Primer cuadro: Porcentaje de Siniestralidad
+            with col1:
+                st.markdown(f"""
+                    <div class="metric-container">
+                        <div class="metric-title">Porcentaje de Siniestralidad</div>
+                        <div class="metric-value">{porcentaje_siniestralidad}</div>
+                    </div>
+                """, unsafe_allow_html=True)
+
+            # Segundo cuadro: Tasa de Dependencia
+            with col2:
+                st.markdown(f"""
+                    <div class="metric-container">
+                        <div class="metric-title">Tasa de Dependencia</div>
+                        <div class="metric-value">{tasa_dependencia}</div>
+                    </div>
+                """, unsafe_allow_html=True)
+
+            # Datos de afiliados
+            afiliados_actuales = 4.64  # En millones
+            nuevos_afiliados = 5.96  # En millones
+
+            # Crear gráfico de barras
+            fig = go.Figure()
+
+            # Barra para afiliados actuales
+            fig.add_trace(go.Bar(
+                x=['Afiliados Actuales'],
+                y=[afiliados_actuales],
+                name='Afiliados Actuales',
+                text=[f"{afiliados_actuales}M"],
+                textposition='outside',
+                marker_color='indianred',
+                textfont=dict(size=18),  # Ajustar tamaño del texto aquí
+            ))
+
+            # Barra para nuevos afiliados
+            fig.add_trace(go.Bar(
+                x=['Nuevos Afiliados'],
+                y=[nuevos_afiliados],
+                name='Nuevos Afiliados',
+                text=[f"{nuevos_afiliados}M"],
+                textposition='outside',
+                marker_color='lightsalmon',
+                textfont=dict(size=18),  # Ajustar tamaño del texto aquí
+            ))
+
+            # Actualizar títulos y formato
+            fig.update_layout(
+                title='Comparación de Afiliados',
+                xaxis_tickfont_size=14,
+                yaxis=dict(
+                    title='Cantidad (en millones)',
+                    titlefont_size=16,
+                    tickfont_size=14,
+                ),
+                legend=dict(
+                    x=0,
+                    y=1.0,
+                    bgcolor='rgba(255, 255, 255, 0)',
+                    bordercolor='rgba(255, 255, 255, 0)'
+                ),
+                barmode='group',
+                bargap=0.15,  # Espacio entre barras de grupos adyacentes
+                bargroupgap=0.1  # Espacio entre barras dentro de un grupo
+            )
+
+            # Mostrar gráfico
+            st.plotly_chart(fig, use_container_width=True)
 
 
-                  
+                
 
         with tab1:
 
@@ -715,14 +837,14 @@ def run():
 
         with tab3:
             Fina['Fecha'] = pd.to_datetime(Fina['Periodo'], format='%Y%m', errors='coerce')
-            Finanzas_2 = Fina.groupby('Fecha')[['Ingresos en Salud', 'Gasto en Salud', 'Siniestralidad','Monto per Capita']].sum().reset_index()
+            Finanzas_2 = Fina.groupby('Fecha')[['Ingresos en Salud', 'Gasto en Salud', 'Siniestralidad','Monto per Capita','Capitas']].sum().reset_index()
 
             texto = "En esta sección, estaremos analizando diversos factores financieros asociados al Sistema Financiero (SFS) con el fin de entender y analizar las tendencias financieras que impactan en dicho sistema"
             st.info(texto)
         
             color_map = {'Gasto en Salud': 'blue', 'Ingresos en Salud': 'yellow'}
 
-            opcion = st.selectbox('Selecciona el tipo de agrupación temporal:', ['Mensual', 'Anual'])
+            opcion = st.selectbox('Selecciona una de agrupación temporal:', ['Mensual', 'Anual'])
 
             if opcion == 'Mensual':
                 # Código para el gráfico mensual
@@ -752,6 +874,42 @@ def run():
 
             # Muestra el gráfico seleccionado
             st.plotly_chart(fig, use_container_width=True)
+
+            #-------
+            # Configuración del mapa de colores para 'Capita' e 'Ingresos en Salud'
+            color_map = {'Capitas': 'blue', 'Ingresos en Salud': 'yellow'}
+
+            opciones = st.selectbox('Selecciona el tipo de agrupación temporal:', ['Mensual', 'Anual'], key="grafico_barras")
+
+            if opciones == 'Mensual':
+                # Preparación de datos mensuales para 'Capitas' e 'Ingresos en Salud'
+                data_melted = Finanzas_2.melt(id_vars=['Fecha'], value_vars=['Capitas', 'Ingresos en Salud'],
+                                            var_name='Categoría', value_name='Valor')
+            else:
+                # Preparación de datos anuales para 'Capitas' e 'Ingresos en Salud'
+                Fina['Año'] = Fina['Fecha'].dt.year
+                Finanzas_anual = Fina.groupby('Año')[['Capitas', 'Ingresos en Salud']].sum().reset_index()
+                data_melted = Finanzas_anual.melt(id_vars=['Año'], value_vars=['Capitas', 'Ingresos en Salud'],
+                                                var_name='Categoría', value_name='Valor')
+
+            # Creación del gráfico de barras agrupadas con colores personalizados para 'Capitas' e 'Ingresos en Salud'
+            fig = px.bar(data_melted, x='Año' if opciones == 'Anual' else 'Fecha', y='Valor',
+                        color='Categoría', barmode='group',
+                        color_discrete_map=color_map,  # Aplicando el mapa de colores personalizado
+                        title='Comparación de Capitas vs Ingresos en Salud')
+
+            # Actualizaciones comunes al gráfico
+            fig.update_layout(xaxis_title='Tiempo', yaxis_title='Valor',
+                            legend_title='Indicador', xaxis_tickangle=-45,
+                            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1))
+
+            # Muestra el gráfico seleccionado
+            st.plotly_chart(fig, use_container_width=True)
+      
+
+
+
+           
 
 
             col1, col2 = st.columns([1, 1])
